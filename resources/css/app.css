@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'leaflet/dist/leaflet.css';
+@import '@fontsource/tinos/latin-400.css';
+@import '@fontsource/tinos/latin-700.css';
+@import '@fontsource/dejavu-sans/latin-400.css';
+@import '@fontsource/dejavu-sans/latin-700.css';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    --color-primary: #0b2a4a;
+    --color-primary-dark: #071d36;
+    --color-gold: #d9a94b;
+    --color-gold-light: #f0cf8a;
+    --color-cream: #f7f4ee;
+    --color-surface: #f1ede4;
+    --color-ink: #0f2237;
+    --color-muted: #5f6f80;
+
+    --font-serif: 'Tinos', 'Liberation Serif', 'Times New Roman', Times, serif;
+    --font-sans: 'DejaVu Sans', Verdana, 'Bitstream Vera Sans', sans-serif;
+
+    --shadow-card: 0 6px 20px -8px rgb(11 42 74 / 0.25);
+    --shadow-card-hover: 0 14px 30px -10px rgb(11 42 74 / 0.35);
+}
+
+@layer base {
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    body { @apply bg-cream font-sans text-ink antialiased; overflow-x: hidden; }
+    h1, h2, h3 { @apply font-serif; }
+    :focus-visible { @apply outline-2 outline-offset-2 outline-gold; }
+    img { @apply max-w-full; }
+    /* prevent grid children from forcing horizontal overflow */
+    .grid > *, .flex > .grid { min-width: 0; }
+}
+
+@layer components {
+    .container-x { @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8; }
+    .section-y { @apply py-10 lg:py-14; }
+    .card { @apply overflow-hidden rounded-2xl bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover; }
+    .card img.card-img { @apply transition duration-500; }
+    .card:hover img.card-img { @apply scale-105; }
+    .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition; }
+    .btn-gold { @apply bg-linear-to-b from-gold-light to-gold text-primary-dark hover:brightness-105; }
+    .btn-navy { @apply bg-primary text-white hover:bg-primary-dark; }
+    .btn-outline-light { @apply border border-white/60 bg-white/5 text-white backdrop-blur hover:bg-white/15; }
+    .btn-outline { @apply border border-primary/20 bg-white text-primary hover:bg-surface; }
+    .chip { @apply whitespace-nowrap rounded-full border border-primary/15 bg-white px-4 py-1.5 text-xs font-medium text-primary transition hover:bg-surface; }
+    .chip[aria-pressed='true'] { @apply border-primary bg-primary text-white; }
+    .round-arrow { @apply grid size-8 shrink-0 place-items-center rounded-full bg-gold text-primary-dark shadow; }
+    .eyebrow { @apply mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-gold; }
+    .scrollbar-none { scrollbar-width: none; }
+    .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+}
+
+/* timeline tabs on mobile: only the active day card is shown */
+@media (max-width: 767px) {
+    .day-card:not(.is-active) { display: none; }
+}
+
+/* leaflet pins */
+.pin { width: 28px; height: 28px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 2px solid #fff; box-shadow: 0 2px 6px rgb(0 0 0 / .3); }
+.leaflet-container { font-family: inherit; z-index: 0; }
+
+/* craft swiper nav */
+.craft-swiper .swiper-button-disabled { opacity: .35; }
